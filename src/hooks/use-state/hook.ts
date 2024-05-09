@@ -7,7 +7,8 @@ import { useEventBus } from '../use-event-bus';
 enableReactTracking({ auto: true });
 type HandlerCreator<State, T> = (
   state: Observable<State>,
-  message: T[keyof T]
+  message: T[keyof T],
+  bus: EventBus<T>
 ) => void;
 type Listener = {
   unsubscribe: () => void;
@@ -35,16 +36,19 @@ export function state$<State, T extends Record<keyof T, any>>(
 ) {
   const eventBus = useEventBus<T>();
   const state = useObservable(store);
-  const handles = config.map((c) => (message: T[keyof T]) => {
-    c.handler(state, message);
-  });
-
   const emit = (message: keyof T, payload: T[keyof T]) => {
     eventBus.publish({
       payload,
       topic: message,
     });
   };
+  const handles = React.useMemo(
+    () =>
+      config.map((c) => (message: T[keyof T]) => {
+        c.handler(state, message, { emit });
+      }),
+    [config]
+  );
 
   observe(() => {
     for (let i = 0; i < config.length; i++) {
