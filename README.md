@@ -10,50 +10,55 @@ npm install @revskill10/use-state
 
 # Usage
 
-```jsx
-import { state$ } from '@revskill10/use-state';
-
+```tsx
 export type ExampleProps = {
   text?: String;
 };
 interface Message {
+  Decrement: {
+    amount: number;
+  };
   Increment: {};
-  IncrementAnother: {};
 }
 export function Example(props: ExampleProps) {
   const [count, dispatch] = state$<number, Message>(0, [
     {
       messages: ['Increment'],
-      handler: (c, _, { emit }) => {
+      handler: (c) => {
         c.set(c.get() + 1);
-        emit('IncrementAnother', {});
       },
       onChange: (c) => {
         // eslint-disable-next-line no-console
         console.log(`current count is ${c.get()}`);
       },
     },
-  ]);
-  const [count2] = state$<number, Message>(count + 12, [
     {
-      messages: ['IncrementAnother'],
-      handler: (c) => {
-        c.set(c.get() * 2 + 1);
+      messages: ['Decrement'],
+      handler: (c, payload) => {
+        if ('amount' in payload) {
+          c.set(c.get() - payload.amount ?? 1);
+        }
       },
     },
   ]);
   return (
     <>
+      {`${props.text} ${count}`}
       <button
-        onClick={() => dispatch('Increment')}
+        onClick={() => dispatch('Increment', {})}
         type="button"
-        id="example-button"
+        id="increment-button"
       >
-        {`${props.text} ${count}`}
+        Increment
       </button>
-      <div>{count2}</div>
+      <button
+        onClick={() => dispatch('Decrement', { amount: 3 })}
+        type="button"
+        id="decrement-button"
+      >
+        Decrement
+      </button>
     </>
   );
 }
-
 ```

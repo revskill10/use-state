@@ -8,12 +8,12 @@ enableReactTracking({ auto: true });
 type HandlerCreator<State, T> = (
   state: Observable<State>,
   message: T[keyof T],
-  bus: EventBus<T>
+  bus?: EventBus<T>
 ) => void;
 type Listener = {
   unsubscribe: () => void;
 };
-
+type Dispatcher<T> = (message: keyof T, payload: T[keyof T]) => void;
 type EventBus<T> = {
   emit: (message: keyof T, payload: T[keyof T]) => void;
 };
@@ -29,7 +29,6 @@ type Config<State, T> = Array<{
   onChange?: EffectHandler<State, T>;
   onMount?: (state: Observable<State>) => void;
 }>;
-
 export function state$<State, T extends Record<keyof T, any>>(
   store: State,
   config: Config<State, T>
@@ -45,7 +44,9 @@ export function state$<State, T extends Record<keyof T, any>>(
   const handles = React.useMemo(
     () =>
       config.map((c) => (message: T[keyof T]) => {
-        c.handler(state, message, { emit });
+        c.handler(state, message as T[typeof message], {
+          emit,
+        });
       }),
     [config]
   );
@@ -93,5 +94,5 @@ export function state$<State, T extends Record<keyof T, any>>(
     };
   }, [eventBus, config]);
 
-  return [state.get(), dispatch];
+  return [state.get(), dispatch] as [State, Dispatcher<T>];
 }
