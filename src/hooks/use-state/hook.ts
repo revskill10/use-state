@@ -13,12 +13,19 @@ type Listener = {
   unsubscribe: () => void;
 };
 
-type EffectHandler<T> = (state: Observable<T>) => void | Promise<void>;
+type EventBus<T> = {
+  emit: (message: keyof T, payload: T[keyof T]) => void;
+};
+
+type EffectHandler<T, M> = (
+  state: Observable<T>,
+  bus: EventBus<M>
+) => void | Promise<void>;
 
 type Config<State, T> = Array<{
   handler: HandlerCreator<State, T>;
   messages: Array<keyof T>;
-  onChange?: EffectHandler<State>;
+  onChange?: EffectHandler<State, T>;
   onMount?: (state: Observable<State>) => void;
 }>;
 
@@ -32,11 +39,18 @@ export function state$<State, T extends Record<keyof T, any>>(
     c.handler(state, message);
   });
 
+  const emit = (message: keyof T, payload: T[keyof T]) => {
+    eventBus.publish({
+      payload,
+      topic: message,
+    });
+  };
+
   observe(() => {
     for (let i = 0; i < config.length; i++) {
       const cfg = config[i];
       if (cfg.onChange) {
-        cfg.onChange(state);
+        cfg.onChange(state, { emit });
       }
     }
   });
