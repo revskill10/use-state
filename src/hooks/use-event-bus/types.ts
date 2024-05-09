@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
 export interface Message<M extends Record<string, any>, T extends keyof M> {
-  topic: T;
   payload: M[T];
+  topic: T;
 }
 
 export interface PublishOptions {

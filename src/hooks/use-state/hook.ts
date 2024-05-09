@@ -52,8 +52,8 @@ export function state$<State, T extends Record<keyof T, any>>(
 
   const dispatch = (message: keyof T, payload: T[keyof T]) => {
     eventBus.publish({
-      topic: message,
       payload,
+      topic: message,
     });
   };
 

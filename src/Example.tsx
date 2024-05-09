@@ -17,6 +17,7 @@ export function Example(props: ExampleProps) {
         c.set(c.get() + 1);
       },
       onChange: (c) => {
+        // eslint-disable-next-line no-console
         console.log(`current count is ${c.get()}`);
       },
     },
