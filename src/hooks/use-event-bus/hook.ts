@@ -50,7 +50,7 @@ const useEventBus = <MessagesMap extends Record<string, any>>() => {
     handler: Handler<MessagesMap[Topic]>
   ) => {
     if (event.data.topic === topic) {
-      handler(event.data.payload);
+      handler(String(topic), event.data.payload);
     }
   };
 

@@ -13,4 +13,7 @@ export interface SubscribeOptions {
   targetWindow: Window;
 }
 
-export type Handler<Payload extends any> = (payload: Payload) => void;
+export type Handler<Payload extends any> = (
+  topic: string,
+  payload: Payload
+) => void;

@@ -34,6 +34,7 @@ export function state$<State, T extends Record<keyof T, any>>(
   config: Config<State, T>
 ) {
   const eventBus = useEventBus<T>();
+  const currentMessage = useObservable<string>();
   const state = useObservable(store);
   const emit = (message: keyof T, payload: T[keyof T]) => {
     eventBus.publish({
@@ -43,7 +44,8 @@ export function state$<State, T extends Record<keyof T, any>>(
   };
   const handles = React.useMemo(
     () =>
-      config.map((c) => (message: T[keyof T]) => {
+      config.map((c) => (topic: string, message: T[keyof T]) => {
+        currentMessage.set(topic);
         c.handler(state, message as T[typeof message], {
           emit,
         });
@@ -54,7 +56,8 @@ export function state$<State, T extends Record<keyof T, any>>(
   observe(() => {
     for (let i = 0; i < config.length; i++) {
       const cfg = config[i];
-      if (cfg.onChange) {
+      const cfgMessages = cfg.messages.map(String);
+      if (cfg.onChange && cfgMessages.includes(currentMessage.get())) {
         cfg.onChange(state, { emit });
       }
     }
@@ -68,13 +71,6 @@ export function state$<State, T extends Record<keyof T, any>>(
       }
     }
   });
-
-  const dispatch = (message: keyof T, payload: T[keyof T]) => {
-    eventBus.publish({
-      payload,
-      topic: message,
-    });
-  };
 
   React.useEffect(() => {
     const listeners: Array<Listener> = [];
@@ -94,5 +90,5 @@ export function state$<State, T extends Record<keyof T, any>>(
     };
   }, [eventBus, config]);
 
-  return [state.get(), dispatch] as [State, Dispatcher<T>];
+  return [state.get(), emit] as [State, Dispatcher<T>];
 }
