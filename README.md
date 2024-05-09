@@ -10,7 +10,7 @@ npm install @revskill10/use-state
 
 # Usage
 
-```js
+```jsx
 import { state$ } from '@revskill10/use-state';
 
 export type ExampleProps = {
