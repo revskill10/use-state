@@ -53,7 +53,8 @@
       "release": false
     },
     "npm": {
-      "publish": true
+      "publish": true,
+      "access": "public"
     }
   },
   "engines": {
