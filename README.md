@@ -133,3 +133,8 @@ export function NestedExample(props: NestedExampleProps) {
   );
 }
 ```
+
+# API
+
+One important thing to remember, is the Message is global.
+That means multiple separate components could listen to the same message and react independently.
