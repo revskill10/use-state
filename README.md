@@ -265,17 +265,12 @@ export function TodoApp(props: TodoAppProps) {
 const [count, dispatch] = state$<AppState, Message>({ value: 0 }, [
     {
       messages: ['Increment'],
-      handler: async (c) => {
+      async handler: async (c) => {
         c.loading.set(true);
         await new Promise((resolve) => {
           setTimeout(resolve, 1000);
         });
         c.loading.set(false);
         c.value.set(c.value.get() + 1);
-      },
-      onChange: (c) => {
-        // eslint-disable-next-line no-console
-        console.log(`current count is ${c.get()}`);
-      },
-    },
+      }
 ```
