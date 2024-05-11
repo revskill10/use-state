@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 
-import { MultipleConsumerExample } from '../MultipleConsumerExample';
+import { MultipleConsumerExample } from '../examples/MultipleConsumerExample';
 
 export default {
   title: 'MultipleConsumerExample',

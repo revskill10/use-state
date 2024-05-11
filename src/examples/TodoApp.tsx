@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { StateDispatch, state$ } from './hooks';
+import { StateDispatch, state$ } from '../hooks';
 
 interface Todo {
   completed: boolean;

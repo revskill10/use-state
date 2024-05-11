@@ -1,7 +1,7 @@
 import './Example.css';
 
 import React from 'react';
-import { state$ } from './hooks';
+import { state$ } from '../hooks';
 
 export type ExampleProps = {
   text?: String;

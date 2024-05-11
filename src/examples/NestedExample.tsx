@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { state$ } from './hooks';
+import { state$ } from '../hooks';
 
 interface NestedExampleProps {
   address: {

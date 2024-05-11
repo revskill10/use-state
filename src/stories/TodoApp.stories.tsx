@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 
-import { TodoApp } from '../TodoApp';
+import { TodoApp } from '../examples/TodoApp';
 
 export default {
   title: 'TodoApp',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 
-import { NestedExample } from '../NestedExample';
+import { NestedExample } from '../examples/NestedExample';
 
 export default {
   title: 'NestedExample',
