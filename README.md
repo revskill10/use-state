@@ -179,6 +179,7 @@ export function TodoApp(props: TodoAppProps) {
             completed: false,
           };
           _state.todos.push(newTodo);
+          dispatch('UpdateNewTodoText', { text: '' });
         }
       },
     },
@@ -208,7 +209,6 @@ export function TodoApp(props: TodoAppProps) {
   const handleAddTodo = () => {
     if (state.newTodoText?.trim() !== '') {
       dispatch('AddTodo', { text: state.newTodoText || '' });
-      dispatch('UpdateNewTodoText', { text: '' });
     }
   };
 
