@@ -13,9 +13,14 @@ type HandlerCreator<State, T> = (
 type Listener = {
   unsubscribe: () => void;
 };
-type Dispatcher<T> = (message: keyof T, payload: T[keyof T]) => void;
+export type Dispatcher<T> = (message: keyof T, payload: T[keyof T]) => void;
 type EventBus<T> = {
   emit: (message: keyof T, payload: T[keyof T]) => void;
+};
+
+export type StateDispatch<State, M> = {
+  dispatch: Dispatcher<M>;
+  state: State;
 };
 
 type EffectHandler<T, M> = (

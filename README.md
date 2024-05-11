@@ -137,6 +137,8 @@ export function NestedExample(props: NestedExampleProps) {
 ## Todo App example:
 
 ```tsx
+import { StateDispatch, state$ } from '@revskill10/use-state';
+
 interface Todo {
   completed: boolean;
   id: number;
@@ -163,7 +165,31 @@ interface Message {
     text: string;
   };
 }
+function TodoView({ state, dispatch }: StateDispatch<AppState, Message>) {
+  const handleAddTodo = () => {
+    if (state.newTodoText?.trim() !== '') {
+      dispatch('AddTodo', { text: state.newTodoText || '' });
+    }
+  };
 
+  const handleSubmit = (evt: React.FormEvent) => {
+    evt.preventDefault();
+    handleAddTodo();
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={state.newTodoText}
+        onChange={(e) =>
+          dispatch('UpdateNewTodoText', { text: e.target.value })
+        }
+        placeholder="Enter new todo"
+      />
+      <button type="submit">Add Todo</button>
+    </form>
+  );
+}
 export function TodoApp(props: TodoAppProps) {
   const [state, dispatch] = state$<AppState, Message>(props.appState, [
     {
@@ -208,19 +234,8 @@ export function TodoApp(props: TodoAppProps) {
     },
   ]);
 
-  const handleAddTodo = () => {
-    if (state.newTodoText?.trim() !== '') {
-      dispatch('AddTodo', { text: state.newTodoText || '' });
-    }
-  };
-
   const handleToggleTodo = (id: number) => {
     dispatch('ToggleTodo', { id });
-  };
-
-  const handleSubmit = (evt: React.FormEvent) => {
-    evt.preventDefault();
-    handleAddTodo();
   };
 
   return (
@@ -237,17 +252,7 @@ export function TodoApp(props: TodoAppProps) {
           </li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={state.newTodoText}
-          onChange={(e) =>
-            dispatch('UpdateNewTodoText', { text: e.target.value })
-          }
-          placeholder="Enter new todo"
-        />
-        <button type="submit">Add Todo</button>
-      </form>
+      <TodoView state={state} dispatch={dispatch} />
     </div>
   );
 }
