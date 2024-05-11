@@ -234,10 +234,6 @@ export function TodoApp(props: TodoAppProps) {
     },
   ]);
 
-  const handleToggleTodo = (id: number) => {
-    dispatch('ToggleTodo', { id });
-  };
-
   return (
     <div>
       <h2>Todo List:</h2>
@@ -246,7 +242,7 @@ export function TodoApp(props: TodoAppProps) {
           <li
             key={todo.id}
             style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
-            onClick={() => handleToggleTodo(todo.id)}
+            onClick={() => dispatch('ToggleTodo', { id })}
           >
             {todo.text}
           </li>

@@ -9,7 +9,7 @@ type HandlerCreator<State, T> = (
   state: Observable<State>,
   message: T[keyof T],
   bus?: EventBus<T>
-) => void;
+) => void | Promise<void>;
 type Listener = {
   unsubscribe: () => void;
 };
