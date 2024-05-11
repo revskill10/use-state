@@ -138,17 +138,18 @@ export function KanbanApp() {
             'destinationColumnId' in payload &&
             'taskId' in payload
           ) {
+            console.log('moveTask', payload);
             const { sourceColumnId, destinationColumnId, taskId } = payload;
             const sourceColumn = _state.columns.find(
               (col) => col.id.get() === sourceColumnId
             );
-            const destinationColumn = _state.columns.find(
-              (col) => col.id.get() === destinationColumnId
-            );
+            const destinationColumn = _state.columns
+              .get()
+              .find((col) => col.id === destinationColumnId);
             if (sourceColumn && destinationColumn) {
-              const taskIndex = sourceColumn.tasks.findIndex(
-                (task) => task.id === taskId
-              );
+              const taskIndex = sourceColumn.tasks
+                .get()
+                .findIndex((task) => task.id === taskId);
               if (taskIndex !== -1) {
                 const taskToMove = sourceColumn.tasks.splice(taskIndex, 1)[0];
                 destinationColumn.tasks.push(taskToMove);
