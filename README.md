@@ -179,8 +179,10 @@ export function TodoApp(props: TodoAppProps) {
             completed: false,
           };
           _state.todos.push(newTodo);
-          dispatch('UpdateNewTodoText', { text: '' });
         }
+      },
+      onChange: (_, { emit }) => {
+        emit('UpdateNewTodoText', { text: '' });
       },
     },
     {
