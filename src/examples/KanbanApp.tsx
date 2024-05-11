@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import { StateDispatch, state$ } from '../hooks';
 
@@ -15,6 +16,7 @@ interface Column {
 
 interface KanbanAppState {
   columns: Column[];
+  focusedInput: string | null;
 }
 
 // Define messages
@@ -27,6 +29,9 @@ interface KanbanMessage {
     destinationColumnId: string;
     sourceColumnId: string;
     taskId: string;
+  };
+  SetFocusedInput: {
+    columnId: string | null;
   };
 }
 
@@ -59,6 +64,17 @@ function KanbanView({
     });
   };
 
+  const handleAddTask = (columnId: string, content: string) => {
+    if (content.trim() !== '') {
+      const newTask: Task = { id: `task${Date.now()}`, content };
+      dispatch('AddTask', { columnId, task: newTask });
+    }
+  };
+
+  const handleFocusInput = (columnId: string | null) => {
+    dispatch('SetFocusedInput', { columnId });
+  };
+
   return (
     <div className="kanban-board">
       {state.columns.map((column) => (
@@ -80,6 +96,19 @@ function KanbanView({
               </li>
             ))}
           </ul>
+          <input
+            type="text"
+            placeholder="Enter new task"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleAddTask(column.id, e.currentTarget.value);
+                e.currentTarget.value = ''; // Clear input after adding task
+              }
+            }}
+            onFocus={() => handleFocusInput(column.id)}
+            onBlur={() => handleFocusInput(null)}
+            autoFocus={state.focusedInput === column.id}
+          />
         </div>
       ))}
     </div>
@@ -110,6 +139,7 @@ export function KanbanApp() {
         tasks: [],
       },
     ],
+    focusedInput: null,
   };
 
   // Reducer for handling messages
