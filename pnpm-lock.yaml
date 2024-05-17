@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@legendapp/state':
-        specifier: ^2.1.13
+        specifier: '>=2.1.13'
         version: 2.1.13(react@18.2.0)
     devDependencies:
       '@babel/core':

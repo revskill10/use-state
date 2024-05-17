@@ -1,7 +1,7 @@
 {
   "name": "@revskill10/use-state",
   "description": "",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "",
   "license": "MIT",
   "keywords": [],
@@ -119,10 +119,9 @@
   },
   "peerDependencies": {
     "react": ">=17",
-    "react-dom": ">=17"
+    "react-dom": ">=17",
+    "@legendapp/state": ">=2.1.13"
   },
   "resolutions": {},
-  "dependencies": {
-    "@legendapp/state": "^2.1.13"
-  }
+  "dependencies": {}
 }
