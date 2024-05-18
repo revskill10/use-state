@@ -1,5 +1,5 @@
 import { Observable, observe } from '@legendapp/state';
-import { useMountOnce, useObservable } from '@legendapp/state/react';
+import { useMountOnce, useObservable, observer } from '@legendapp/state/react';
 import React from 'react';
 import { enableReactTracking } from '@legendapp/state/config/enableReactTracking';
 import { useEventBus } from '../use-event-bus';
@@ -97,3 +97,6 @@ export function state$<State, T extends Record<keyof T, any>>(
 
   return [state.get(), emit] as [State, Dispatcher<T>];
 }
+
+export { observer };
+export type { Observable };

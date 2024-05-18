@@ -1,7 +1,7 @@
 {
   "name": "@revskill10/use-state",
   "description": "",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "author": "",
   "license": "MIT",
   "keywords": [],
@@ -65,16 +65,17 @@
     "@babel/preset-env": "7.24.3",
     "@babel/preset-react": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
+    "@chromatic-com/storybook": "^1",
     "@ryansonshine/commitizen": "4.2.8",
     "@ryansonshine/cz-conventional-changelog": "3.3.4",
-    "@storybook/addon-essentials": "8.0.5",
-    "@storybook/addon-interactions": "8.0.5",
-    "@storybook/addon-links": "8.0.5",
+    "@storybook/addon-essentials": "^8.1.1",
+    "@storybook/addon-interactions": "^8.1.1",
+    "@storybook/addon-links": "^8.1.1",
     "@storybook/addon-webpack5-compiler-swc": "1.0.2",
-    "@storybook/blocks": "8.0.5",
-    "@storybook/react": "8.0.5",
-    "@storybook/react-webpack5": "8.0.5",
-    "@storybook/test": "8.0.5",
+    "@storybook/blocks": "^8.1.1",
+    "@storybook/react": "^8.1.1",
+    "@storybook/react-webpack5": "^8.1.1",
+    "@storybook/test": "^8.1.1",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.2",
     "@types/node": "20.12.2",
@@ -105,11 +106,11 @@
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
     "prop-types": "15.8.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "19.0.0-beta-26f2496093-20240514",
+    "react-dom": "19.0.0-beta-26f2496093-20240514",
     "react-test-renderer": "18.2.0",
     "release-it": "17.1.1",
-    "storybook": "8.0.5",
+    "storybook": "^8.1.1",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
     "tsup": "8.0.2",
@@ -118,10 +119,9 @@
     "vitest": "1.4.0"
   },
   "peerDependencies": {
+    "@legendapp/state": ">=2.1.13",
     "react": ">=17",
-    "react-dom": ">=17",
-    "@legendapp/state": ">=2.1.13"
+    "react-dom": ">=17"
   },
-  "resolutions": {},
-  "dependencies": {}
+  "resolutions": {}
 }
